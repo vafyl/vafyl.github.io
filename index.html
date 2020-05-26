@@ -178,7 +178,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h1><h2 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h2><ul>
+        <h1 id="1、Spring"><a href="#1、Spring" class="headerlink" title="1、Spring"></a>1、Spring</h1><h2 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h2><ul>
 <li>Spring：软件行业的春天</li>
 <li>2020，首次推出了Spring框架的雏形：interface21框架！</li>
 <li>Spring框架即以interface21框架为基础，经过重新设计，并不断丰富其内涵，与2004年3月24日，发布了1.0正式版。</li>
@@ -193,13 +193,43 @@
 <p>maven：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-webmvc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.2.6.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-djbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.2.6.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="1-2-优点"><a href="#1-2-优点" class="headerlink" title="1.2 优点"></a>1.2 优点</h1><ul>
+<h2 id="1-2-优点"><a href="#1-2-优点" class="headerlink" title="1.2 优点"></a>1.2 优点</h2><ul>
 <li>spring是开源的免费的框架</li>
 <li>spring是轻量级、非入侵的框架</li>
 <li><strong>控制反转（IOC），面向切面编程（AOP）</strong></li>
 <li>支持事务的处理，对所有框架支持</li>
 </ul>
 <p>*<em>总之一句话：spring是一个轻量级的控制反转（IOC），面向切面编程（AOP）的框架！ *</em></p>
+<h2 id="1-3组成"><a href="#1-3组成" class="headerlink" title="1.3组成"></a>1.3组成</h2><p><img src="https://images2017.cnblogs.com/blog/1219227/201709/1219227-20170930225010356-45057485.gif" alt="img"></p>
+<h2 id="1-4拓展"><a href="#1-4拓展" class="headerlink" title="1.4拓展"></a>1.4拓展</h2><ul>
+<li>springboot：<ul>
+<li>快速开发的脚手架</li>
+<li>快速开发一个微服务</li>
+<li>约定大于配置</li>
+</ul>
+</li>
+<li>springcloud：<ul>
+<li>基于springboot实现</li>
+</ul>
+</li>
+</ul>
+<p>大多数公司都是使用springboot快速开发，学好spring springmvc，承上启下的作用。</p>
+<p><strong>唯一缺点：配置过于繁琐！</strong></p>
+<h1 id="2、IOC-理论推导"><a href="#2、IOC-理论推导" class="headerlink" title="2、IOC 理论推导"></a>2、IOC 理论推导</h1><p>​    1.UserDao 接口</p>
+<p>​    2.UserDao 实现类</p>
+<p>​    3.UserService 业务接口</p>
+<p>​    3.UserServiceImpl 业务实现类    </p>
+<p>​    根据用户的需求修改源代码的方式是不可行的。</p>
+<p>我们可以通过程序来实现接口的调用，从而满足用户的需求</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过set注入，更改用户的调用</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUserDao</span><span class="params">(UserDao userDao)</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.userDao = userDao;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>程序员掌握程序的创建</p>
+</li>
+<li><p>使用set注入之后，程序只能被动的修改，不需要主动的修改代码</p>
+<p>以上思想为ioc原型</p>
+</li>
+</ul>
 
       
 
