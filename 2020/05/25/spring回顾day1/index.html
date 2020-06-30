@@ -17,7 +17,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://images2017.cnblogs.com/blog/1219227/201709/1219227-20170930225010356-45057485.gif">
 <meta property="article:published_time" content="2020-05-25T15:06:17.233Z">
-<meta property="article:modified_time" content="2020-05-26T15:19:03.086Z">
+<meta property="article:modified_time" content="2020-06-02T14:14:46.399Z">
 <meta property="article:author" content="小方的猪儿虫">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://images2017.cnblogs.com/blog/1219227/201709/1219227-20170930225010356-45057485.gif">
@@ -183,8 +183,10 @@
         <h1 id="1、Spring"><a href="#1、Spring" class="headerlink" title="1、Spring"></a>1、Spring</h1><h2 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h2><ul>
 <li>Spring：软件行业的春天</li>
 <li>2020，首次推出了Spring框架的雏形：interface21框架！</li>
-<li>Spring框架即以interface21框架为基础，经过重新设计，并不断丰富其内涵，与2004年3月24日，发布了1.0正式版。</li>
+<li>Spring框架即以interface21框架为基础，经过重新设计，并不断丰富其内涵，与2004年3月24日，发布了1.0正式版。<ul>
 <li>**Rod Johnson  Spring Framework创始人，著名作者。 Rod在悉尼大学不仅获得了计算机学位，同时还获得了音乐学位。更令人吃惊的是在回到软件开发领域之前，他还获得了音乐学的博士学位。</li>
+</ul>
+</li>
 <li>Spring理念：使现有的技术更加容易使用，本身是一个大杂烩，整合了现有的技术框架</li>
 <li>SSH：struct2 + spring + hibernate</li>
 <li>SSM：springmvc + spring +mybatis</li>
@@ -232,7 +234,42 @@
 <p>以上思想为ioc原型</p>
 </li>
 </ul>
+<h1 id="3、IOC本质"><a href="#3、IOC本质" class="headerlink" title="3、IOC本质"></a>3、IOC本质</h1><ul>
+<li>IoC(Inversion of Control) 控制反转，即“不用打电话过来，我们会打给你”。</li>
+</ul>
+<p>两种实现： 依赖查找（DL）和依赖注入（DI）。</p>
+<p>IOC 和 DI 、DL 的关系（这个 DL，Avalon 和 EJB 就是使用的这种方式实现的 IoC）：</p>
+<ul>
+<li>DL 已经被抛弃，因为他需要用户自己去是使用 API  进行查找资源和组装对象。即有侵入性。</li>
+<li>DI 是 Spring 使用的方式，容器负责组件的装配。</li>
+</ul>
+<p>注意：Java 使用 DI 方式实现 IoC 的不止 Spring，包括 Google 的 Guice，还有一个冷门的 PicoContainer（极度轻量，但只提供 IoC）。</p>
+<p>Spring 的 IoC 设计支持以下功能：</p>
+<ul>
+<li>依赖注入</li>
+<li>依赖检查</li>
+<li>自动装配</li>
+<li>支持集合</li>
+<li>指定初始化方法和销毁方法</li>
+<li>支持回调某些方法（但是需要实现 Spring 接口，略有侵入）</li>
+</ul>
+<p>其中，最重要的就是依赖注入，从 XML 的配置上说， 即 ref 标签。对应 Spring RuntimeBeanReference 对象。</p>
+<p>对于 IoC 来说，最重要的就是容器。容器管理着 Bean 的生命周期，控制着 Bean  的依赖注入。</p>
+<p>那么， Spring 如何设计容器的呢？</p>
+<p>Spring 作者 Rod Johnson 设计了两个接口用以表示容器。</p>
+<ul>
+<li>BeanFactory</li>
+<li>ApplicationContext</li>
+</ul>
+<p>BeanFactory 粗暴简单，可以理解为就是个 HashMap，Key 是 BeanName，Value 是 Bean 实例。通常只提供注册（put），获取（get）这两个功能。我们可以称之为 <strong>“低级容器”</strong>。</p>
+<p>ApplicationContext 可以称之为 <strong>“高级容器”</strong>。因为他比 BeanFactory 多了更多的功能。他继承了多个接口。因此具备了更多的功能。例如资源的获取，支持多种消息（例如 JSP tag 的支持），对 BeanFactory 多了工具级别的支持等待。所以你看他的名字，已经不是 BeanFactory 之类的工厂了，而是 “应用上下文”， 代表着整个大容器的所有功能。该接口定义了一个 refresh 方法，此方法是所有阅读 Spring 源码的人的最熟悉的方法，用于刷新整个容器，即重新加载/刷新所有的 bean。</p>
+<h1 id="4、Spring配置"><a href="#4、Spring配置" class="headerlink" title="4、Spring配置"></a>4、Spring配置</h1><h2 id="4-1-别名"><a href="#4-1-别名" class="headerlink" title="4.1 别名"></a>4.1 别名</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--  取别名  --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">alias</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">alias</span>=<span class="string">"user2"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
 
+<h2 id="4-2-bean"><a href="#4-2-bean" class="headerlink" title="4.2 bean"></a>4.2 bean</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">  id: bean的唯一标志</span></span><br><span class="line"><span class="comment">  class: 权限的类名</span></span><br><span class="line"><span class="comment">  name: 别名</span></span><br><span class="line"><span class="comment">  --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"userT"</span> <span class="attr">class</span>=<span class="string">"com.zh.pojo.UserT"</span> <span class="attr">name</span>=<span class="string">"userT2"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"王五"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-3import"><a href="#4-3import" class="headerlink" title="4.3import"></a>4.3import</h2><p>不同的人开发写了不同的xml文件 </p>
+<p>将其他xml文件 整合到一个xml文件  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">"beans.xml"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">"beans1.xml"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">"beans2.xml"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
       
 
       
@@ -323,6 +360,20 @@
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2020/06/21/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%8D%E4%B9%A0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          多线程复习
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
